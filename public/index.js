@@ -288,3 +288,24 @@ document.addEventListener("mousemove", (e) => {
     document.body.style.setProperty("--x", e.clientX + "px");
     document.body.style.setProperty("--y", e.clientY + "px");
 });
+
+
+
+
+
+
+
+
+function toggleSimpleMode() {
+    document.body.classList.toggle("simple-mode");
+}
+
+
+
+function toggleSimpleMode() {
+    document.body.classList.toggle("simple-mode");
+
+    if (document.body.classList.contains("simple-mode")) {
+        document.getElementById("sj-address").focus();
+    }
+}

@@ -7,12 +7,15 @@ body {
 	display: flex;
 	flex-direction: column;
 	min-height: 100vh;
+  overflow-x: hidden;
 }
 
 html, body {
   height: 100%;
   margin: 0;
   overflow-x: hidden;
+  
+  overflow: hidden;
 }
 
 
@@ -42,19 +45,23 @@ html, body {
 
 
 }
-#sj-frame {
+
+
+
+
+sj-frame {
     position: fixed;
-    top: 0;
-    left: 0;
+    inset: 0;              /* shorthand for top/left/right/bottom = 0 */
     width: 100vw;
     height: 100vh;
 
     border: none;
     z-index: 999999;
-  overflow: auto;
-    background: #000;
-}
 
+    background: #000;
+
+    overflow: hidden;      /* 🔥 prevents scrolling inside it from leaking */
+}
 #sj-error {
 	color: #ff6666 !important;
 	white-space: pre-wrap;
@@ -568,3 +575,42 @@ body > * {
 }
 
 
+
+
+
+/* Hide major UI sections */
+body.simple-mode .logo-wrapper,
+body.simple-mode .desc,
+body.simple-mode .engine-floating,
+body.simple-mode #navbar,
+body.simple-mode #nav-container,
+body.simple-mode #navbar-dot,
+body.simple-mode hr,
+body.simple-mode h3,
+body.simple-mode .lesson-link,
+body.simple-mode footer {
+    display: none !important;
+}
+
+/* Keep ONLY search form visible and centered */
+body.simple-mode #sj-form {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    display: flex !important;
+    justify-content: center;
+    align-items: center;
+}
+
+body.simple-mode {
+    background: #000 !important;
+    background-image: none !important;
+}
+
+/* remove the grid overlay layers */
+body.simple-mode::before,
+body.simple-mode::after {
+    display: none !important;
+}
