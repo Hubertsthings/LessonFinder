@@ -40,37 +40,47 @@
 			</p>
 		</div>
 
-		<form id="sj-form" class="flex-center">
-			<input
-				id="sj-search-engine"
-				value="https://search.brave.com/search?q=%s"
-				type="hidden"
-			/>
-			<input id="sj-address" type="text" placeholder="Find a lesson" />
-		</form>
 
 
 
-		<div class="engine-floating">
-    <div class="engine-box">
-        <label class="engine-label">Search Engine</label>
 
-        <select id="engine-selector" class="engine-select">
 
-			 <option value="https://duckduckgo.com/?q=%s ">DuckDuckGo</option>
-            <option value="https://search.brave.com/search?q=%s">Brave</option>
-            <option value="https://www.google.com/search?q=%s">Google</option>
-            <option value="https://www.ecosia.org/search?method=index&q=%s">Ecosia</option>
-            <option value="https://www.bing.com/search?q=%s">Bing</option>
-           
+		<form id="sj-form" class="search-island">
 
-        </select>
-    </div>
+  <div class="engine-trigger" onclick="toggleEngineMenu()">
+    <img id="engine-icon" src="ela/duck.png">
 </div>
 
+<div id="engine-menu" class="engine-menu">
+<div onclick="setEngine(this, 'https://duckduckgo.com/?q=%s')">
+    <img src="ela/duck.png">
+    <span>DuckDuckGo</span>
+</div>
+
+<div onclick="setEngine(this, 'https://search.brave.com/search?q=%s')">
+    <img src="ela/brave.jpg">
+    <span>Brave</span>
+</div>
+
+<div onclick="setEngine(this, 'https://www.google.com/search?q=%s')">
+    <img src="ela/google.png">
+    <span>Google</span>
+</div>
+
+<div onclick="setEngine(this, 'https://www.ecosia.org/search?q=%s')">
+    <img src="ela/ecosia.png">
+    <span>Ecosia</span>
+</div>
+</div>
+
+    <input id="sj-address" type="text" placeholder="Find a lesson" />
+
+</form>
+	
 
 
-	<
+
+
 
 
 
@@ -135,7 +145,7 @@
 
 			
 			<button onclick="toggleSimpleMode()" class="lesson-link">
-				<img title="simple mode. For dummies" src="mathskill.png" alt="Click to visit website" style="cursor: pointer; max-width: 60px; margin: 15px;" />
+				<img title="simple mode." src="mathskill.png" alt="Click to visit website" style="cursor: pointer; max-width: 60px; margin: 15px;" />
 			</button>
 
 		</div>

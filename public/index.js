@@ -8,7 +8,6 @@ const form = document.getElementById("sj-form");
 const address = document.getElementById("sj-address");
 const error = document.getElementById("sj-error");
 const errorCode = document.getElementById("sj-error-code");
-const engineSelector = document.getElementById("engine-selector");
 
 /**
  * Globals
@@ -98,7 +97,7 @@ form.addEventListener("submit", async (event) => {
     const query = address.value.trim();
     if (!query) return;
 
-    const engine = engineSelector.value;
+    const engine = currentEngine;
     const url = search(query, engine);
 
     try {
@@ -308,4 +307,82 @@ function toggleSimpleMode() {
     if (document.body.classList.contains("simple-mode")) {
         document.getElementById("sj-address").focus();
     }
+}
+
+
+
+document.addEventListener("DOMContentLoaded", () => {
+    document.getElementById("sj-address").focus();
+});
+
+
+
+
+let currentEngine = "https://duckduckgo.com/?q=%s";
+
+function setEngine(el, url) {
+    currentEngine = url;
+
+    const img = el.querySelector("img").src;
+    document.getElementById("engine-icon").src = img;
+
+    
+    document.getElementById("engine-menu").classList.remove("open");
+
+    showToast("Successful  😼");
+}
+
+
+
+function toggleEngineMenu() {
+    const menu = document.getElementById("engine-menu");
+    menu.classList.toggle("open");
+}
+
+
+
+
+
+function toggleEngineMenu() {
+    console.log("CLICKED"); 
+    const menu = document.getElementById("engine-menu");
+    menu.classList.toggle("open");
+}
+
+
+
+
+let toastEl = null;
+
+function showToast(text) {
+    // remove old toast if exists
+    if (toastEl) toastEl.remove();
+
+    toastEl = document.createElement("div");
+    toastEl.className = "mouse-toast";
+    toastEl.textContent = text;
+
+    document.body.appendChild(toastEl);
+
+    // follow mouse
+    document.addEventListener("mousemove", moveToast);
+
+    // fade out after delay
+    setTimeout(() => {
+        toastEl.classList.add("fade-out");
+    }, 800);
+
+    // remove after animation
+    setTimeout(() => {
+        toastEl.remove();
+        document.removeEventListener("mousemove", moveToast);
+        toastEl = null;
+    }, 1800);
+}
+
+function moveToast(e) {
+    if (!toastEl) return;
+
+    toastEl.style.left = e.clientX + 10 + "px";
+    toastEl.style.top = e.clientY - 20 + "px";
 }
