@@ -138,6 +138,9 @@ footer a:hover {
 	border-radius: 6px;
 	color: #fff;
 	transition: border-radius 0.75s ease-out;
+
+
+
 }
 
 #sj-address:focus {
@@ -197,7 +200,7 @@ footer a:hover {
     flex-direction: column;
     align-items: center;
     gap: 1px;
-    padding: 1px 10px;
+    padding: 10px 10px;
     border-radius: 14px;
 
     background: rgba(255, 255, 255, 0.06);
@@ -651,11 +654,11 @@ body.simple-mode::after {
     display: flex;
     align-items: center;
 
-    padding: 2px 12px; /* 👈 EVEN horizontal spacing */
+    padding: 10px 15px; /* 👈 EVEN horizontal spacing */
     border-radius: 10px;
 
     background: rgba(20,20,20,0.6);
-    backdrop-filter: blur(14px);
+    backdrop-filter: blur(10px);
 
     border: 1px solid rgba(255,255,255,0.15);
     box-shadow: 0 10px 30px rgba(0,0,0,0.4);
@@ -663,7 +666,7 @@ body.simple-mode::after {
     width: fit-content;
     margin: 20px auto;
 
-    gap: 8px; /* spacing BETWEEN items */
+    gap: 19px; /* spacing BETWEEN items */
 }
 
 .engine-btn {
@@ -674,13 +677,13 @@ body.simple-mode::after {
     background: rgba(255,255,255,0.08);
     color: white;
 
-    padding: 6px 10px;
+    padding: 10px 15px;
     border-radius: 999px;
 
     cursor: pointer;
-    font-size: 14px;
+    font-size: 19px;
 
-    transition: 0.5s;
+    transition: 0.9s;
 }
 
 .engine-btn:hover {
@@ -710,8 +713,8 @@ body.simple-mode::after {
 
     gap: 10px;
 
-    padding: 12px;
-    border-radius: 14px;
+    padding: 18px;
+    border-radius: 19px;
 
     background: rgba(20,20,20,0.95);
     backdrop-filter: blur(14px);
@@ -813,8 +816,8 @@ body.simple-mode::after {
 }
 
 .engine-menu img {
-    width: 30px;
-    height: 30px;
+    width: 40px;
+    height: 40px;
 }
 
 
@@ -828,24 +831,24 @@ body.simple-mode::after {
     background: rgba(20,20,20,0.9);
     color: white;
 
-    padding: 6px 10px;
+    padding: 8px 10px;
     border-radius: 8px;
 
-    font-size: 12px;
+    font-size: 15px;
     white-space: nowrap;
 
-    backdrop-filter: blur(10px);
+    backdrop-filter: blur(100px);
     border: 1px solid rgba(255,255,255,0.1);
 
     opacity: 1;
     transform: translateY(0);
 
-    transition: opacity 0.6s ease, transform 0.6s ease;
+    transition: opacity 0.5s ease, transform 1.6s ease;
 
     z-index: 999999;
 }
 
 .mouse-toast.fade-out {
     opacity: 0;
-    transform: translateY(-10px);
+    transform: translateY(-40px);
 }

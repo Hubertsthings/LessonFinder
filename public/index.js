@@ -12,6 +12,55 @@ const errorCode = document.getElementById("sj-error-code");
 /**
  * Globals
  */
+
+
+
+
+/**
+ * Globals
+ */
+/**
+ * Globals
+ */
+/**
+ * Globals
+ */
+/**
+ * Globals
+ */
+let inactivityTimer = null;
+const INACTIVITY_LIMIT = 10 * 60 * 1000;// 5 minutes
+
+function resetInactivityTimer() {
+    clearTimeout(inactivityTimer);
+
+    inactivityTimer = setTimeout(async () => {
+        console.log("5 minutes of inactivity — closing Wisp session.");
+
+        showTimeoutToast();
+
+        clearTimeout(inactivityTimer);
+        inactivityTimer = null;
+
+        if (currentFrame) {
+            currentFrame.frame.remove();
+            currentFrame = null;
+        }
+
+        currentUrl = "";
+
+        try {
+            if (connection) {
+                await connection.setTransport("/libcurl/index.mjs", []);
+                console.log("Wisp transport released.");
+            }
+        } catch (err) {
+            console.warn("Failed to release Wisp transport:", err);
+        }
+    }, INACTIVITY_LIMIT);
+}
+
+
 let currentFrame = null;
 let currentUrl = "";
 let scramjet;
@@ -114,6 +163,9 @@ form.addEventListener("submit", async (event) => {
                 { websocket: wispUrl },
             ]);
         }
+
+        resetInactivityTimer();
+        
 initFrame();
 startLoading();
 
@@ -273,7 +325,45 @@ document.getElementById("nav-search").addEventListener("keydown", function (e) {
         e.preventDefault();
         navSearch();
     }
+
 });
+
+
+
+
+window.goBack = function () {
+    resetInactivityTimer();
+
+    try {
+        currentFrame?.frame.contentWindow.history.back();
+    } catch (e) {
+        console.warn("Back failed", e);
+    }
+};
+
+window.goForward = function () {
+    resetInactivityTimer();
+
+    try {
+        currentFrame?.frame.contentWindow.history.forward();
+    } catch (e) {
+        console.warn("Forward failed", e);
+    }
+};
+
+window.refreshPage = function () {
+    resetInactivityTimer();
+
+    try {
+        if (currentFrame && currentUrl) {
+            currentFrame.go(currentUrl);
+        }
+    } catch (e) {
+        console.warn("Refresh failed", e);
+    }
+};
+
+
 
 
 
@@ -288,9 +378,24 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 
+
+
+let mouseX = 0;
+let mouseY = 0;
+let mouseFrame = null;
+
 document.addEventListener("mousemove", (e) => {
-    document.body.style.setProperty("--x", e.clientX + "px");
-    document.body.style.setProperty("--y", e.clientY + "px");
+    mouseX = e.clientX;
+    mouseY = e.clientY;
+
+    if (!mouseFrame) {
+        mouseFrame = requestAnimationFrame(() => {
+            document.body.style.setProperty("--x", mouseX + "px");
+            document.body.style.setProperty("--y", mouseY + "px");
+
+            mouseFrame = null;
+        });
+    }
 });
 
 
@@ -336,6 +441,56 @@ function setEngine(el, url) {
 
     showToast("Successful  😼");
 }
+
+
+
+
+function showTimeoutToast() {
+    if (toastEl) toastEl.remove();
+
+    toastEl = document.createElement("div");
+    toastEl.className = "mouse-toast";
+    toastEl.textContent = "Session timed out 😾.";
+
+    document.body.appendChild(toastEl);
+
+    // Put it near the current mouse position
+    document.addEventListener("mousemove", moveToast);
+
+    // Keep it visible for 3 seconds
+    setTimeout(() => {
+        if (!toastEl) return;
+
+        toastEl.classList.add("fade-out");
+    }, 2500);
+
+    setTimeout(() => {
+        if (toastEl) {
+            toastEl.remove();
+            toastEl = null;
+        }
+
+        document.removeEventListener("mousemove", moveToast);
+    }, 3200);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

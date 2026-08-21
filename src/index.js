@@ -28,10 +28,26 @@ const fastify = Fastify({
 				res.setHeader("Cross-Origin-Embedder-Policy", "require-corp");
 				handler(req, res);
 			})
-			.on("upgrade", (req, socket, head) => {
-				if (req.url.endsWith("/wisp/")) wisp.routeRequest(req, socket, head);
-				else socket.end();
-			});
+			
+
+		.on("upgrade", (req, socket, head) => {
+    console.log("UPGRADE:", req.url);
+
+    if (req.url?.endsWith("/wisp/")) {
+        console.log("WISP CONNECTION");
+		
+console.log("⏱️ Timeout set for 5 seconds");
+
+        wisp.routeRequest(req, socket, head);
+    } else {
+        console.log("OTHER UPGRADE:", req.url);
+        socket.end();
+    }
+});
+
+
+
+
 	},
 });
 
@@ -76,6 +92,8 @@ fastify.server.on("listening", () => {
 		}:${address.port}`
 	);
 });
+
+
 
 process.on("SIGINT", shutdown);
 process.on("SIGTERM", shutdown);
