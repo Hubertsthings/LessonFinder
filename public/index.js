@@ -28,39 +28,6 @@ const errorCode = document.getElementById("sj-error-code");
 /**
  * Globals
  */
-let inactivityTimer = null;
-const INACTIVITY_LIMIT = 10 * 60 * 1000;// 5 minutes
-
-function resetInactivityTimer() {
-    clearTimeout(inactivityTimer);
-
-    inactivityTimer = setTimeout(async () => {
-        console.log("5 minutes of inactivity — closing Wisp session.");
-
-        showTimeoutToast();
-
-        clearTimeout(inactivityTimer);
-        inactivityTimer = null;
-
-        if (currentFrame) {
-            currentFrame.frame.remove();
-            currentFrame = null;
-        }
-
-        currentUrl = "";
-
-        try {
-            if (connection) {
-                await connection.setTransport("/libcurl/index.mjs", []);
-                console.log("Wisp transport released.");
-            }
-        } catch (err) {
-            console.warn("Failed to release Wisp transport:", err);
-        }
-    }, INACTIVITY_LIMIT);
-}
-
-
 let currentFrame = null;
 let currentUrl = "";
 let scramjet;
@@ -164,7 +131,7 @@ form.addEventListener("submit", async (event) => {
             ]);
         }
 
-        resetInactivityTimer();
+     
         
 initFrame();
 startLoading();
