@@ -24,16 +24,11 @@ importers:
         specifier: ^0.4.1
         version: 0.4.1(utf-8-validate@6.0.4)
       fastify:
-<<<<<<< HEAD
         specifier: ^5.4.0
         version: 5.5.0
       pnpm:
         specifier: ^10.33.1
         version: 10.33.1
-=======
-        specifier: ^5.7.4
-        version: 5.8.5
->>>>>>> f6f83cbc93091e47b9c357eb00ea289828aedf94
       ws:
         specifier: ^8.18.3
         version: 8.18.3(bufferutil@4.1.0)(utf-8-validate@6.0.4)
@@ -11367,7 +11362,6 @@ snapshots:
 
   word-wrap@1.2.5: {}
 
-<<<<<<< HEAD
   wrap-ansi@7.0.0:
     dependencies:
       ansi-styles: 4.3.0
@@ -11388,8 +11382,6 @@ snapshots:
       imurmurhash: 0.1.4
       signal-exit: 3.0.7
 
-=======
->>>>>>> f6f83cbc93091e47b9c357eb00ea289828aedf94
   ws@8.18.3(bufferutil@4.1.0)(utf-8-validate@6.0.4):
     optionalDependencies:
       bufferutil: 4.1.0
