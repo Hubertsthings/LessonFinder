@@ -153,6 +153,146 @@ window.navOpen = true;
     }
 });
 
+const favoritesStorageKey = "lessonFinderFavorites";
+let savedFavorites = [];
+
+function setFavoriteError(message) {
+    document.getElementById("favorite-error").textContent = message;
+}
+
+function renderFavorites() {
+    const favoritesContainer = document.getElementById("custom-favorites");
+    favoritesContainer.replaceChildren();
+
+    savedFavorites.forEach((favorite, index) => {
+        const entry = document.createElement("div");
+        entry.className = "favorite-entry";
+
+        const visitButton = document.createElement("button");
+        visitButton.className = "custom-favorite";
+        visitButton.type = "button";
+        visitButton.setAttribute("aria-label", `Visit ${favorite.name}`);
+
+        const icon = document.createElement("img");
+        icon.className = "favorite-icon";
+        icon.src = "/ela/fav.png";
+        icon.alt = "";
+
+        const name = document.createElement("span");
+        name.className = "favorite-name";
+        name.textContent = favorite.name;
+
+        visitButton.append(icon, name);
+        visitButton.addEventListener("click", () => {
+            address.value = favorite.url;
+            form.requestSubmit();
+        });
+
+        const removeButton = document.createElement("button");
+        removeButton.className = "remove-favorite";
+        removeButton.type = "button";
+        removeButton.textContent = "×";
+        removeButton.setAttribute("aria-label", `Remove ${favorite.name}`);
+        removeButton.addEventListener("click", () => {
+            const updatedFavorites = savedFavorites.filter((_, itemIndex) => itemIndex !== index);
+            if (saveFavorites(updatedFavorites)) {
+                savedFavorites = updatedFavorites;
+                renderFavorites();
+            }
+        });
+
+        entry.append(visitButton, removeButton);
+        favoritesContainer.append(entry);
+    });
+}
+
+function saveFavorites(favorites) {
+    try {
+        localStorage.setItem(favoritesStorageKey, JSON.stringify(favorites));
+        setFavoriteError("");
+        return true;
+    } catch (err) {
+        setFavoriteError(`Could not save favorites: ${err.message}`);
+        return false;
+    }
+}
+
+function initializeFavorites() {
+    const favoriteForm = document.getElementById("favorite-form");
+    const addFavoriteButton = document.getElementById("add-favorite-button");
+    const cancelFavoriteButton = document.getElementById("cancel-favorite-button");
+    const favoriteName = document.getElementById("favorite-name");
+    const favoriteUrl = document.getElementById("favorite-url");
+
+    try {
+        const storedFavorites = localStorage.getItem(favoritesStorageKey);
+        if (storedFavorites) {
+            const parsedFavorites = JSON.parse(storedFavorites);
+            if (
+                !Array.isArray(parsedFavorites) ||
+                parsedFavorites.some(
+                    (favorite) =>
+                        !favorite ||
+                        typeof favorite.name !== "string" ||
+                        typeof favorite.url !== "string"
+                )
+            ) {
+                throw new Error("Saved favorites have an invalid format.");
+            }
+            savedFavorites = parsedFavorites;
+        }
+    } catch (err) {
+        setFavoriteError(`Could not load favorites: ${err.message}`);
+    }
+
+    renderFavorites();
+
+    addFavoriteButton.addEventListener("click", () => {
+        favoriteForm.hidden = false;
+        favoriteName.focus();
+    });
+
+    cancelFavoriteButton.addEventListener("click", () => {
+        favoriteForm.reset();
+        favoriteForm.hidden = true;
+        setFavoriteError("");
+    });
+
+    favoriteForm.addEventListener("submit", (event) => {
+        event.preventDefault();
+
+        const name = favoriteName.value.trim();
+        const rawUrl = favoriteUrl.value.trim();
+        if (!name || !rawUrl) {
+            setFavoriteError("Enter both a button name and website address.");
+            return;
+        }
+
+        let url;
+        try {
+            url = new URL(/^[a-zA-Z][a-zA-Z\d+.-]*:/.test(rawUrl) ? rawUrl : `https://${rawUrl}`);
+        } catch {
+            setFavoriteError("Enter a valid website address.");
+            return;
+        }
+
+        if (!["http:", "https:"].includes(url.protocol)) {
+            setFavoriteError("Website addresses must use http or https.");
+            return;
+        }
+
+        const updatedFavorites = [...savedFavorites, { name, url: url.toString() }];
+        if (!saveFavorites(updatedFavorites)) return;
+
+        savedFavorites = updatedFavorites;
+        renderFavorites();
+        favoriteForm.reset();
+        favoriteForm.hidden = true;
+    });
+}
+
+document.addEventListener("DOMContentLoaded", initializeFavorites);
+
 /**
  * Navigation buttons (global)
  */
@@ -374,12 +514,6 @@ document.addEventListener("mousemove", (e) => {
 
 function toggleSimpleMode() {
     document.body.classList.toggle("simple-mode");
-}
-
-
-
-function toggleSimpleMode() {
-    document.body.classList.toggle("simple-mode");
 
     if (document.body.classList.contains("simple-mode")) {
         document.getElementById("sj-address").focus();
@@ -466,15 +600,6 @@ function toggleEngineMenu() {
     menu.classList.toggle("open");
 }
 
-
-
-
-
-function toggleEngineMenu() {
-    console.log("CLICKED"); 
-    const menu = document.getElementById("engine-menu");
-    menu.classList.toggle("open");
-}
 
 
 

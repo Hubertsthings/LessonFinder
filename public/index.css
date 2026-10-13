@@ -591,6 +591,8 @@ body.simple-mode #navbar-dot,
 body.simple-mode hr,
 body.simple-mode h3,
 body.simple-mode .lesson-link,
+body.simple-mode .favorite-controls,
+body.simple-mode .favorite-sites,
 body.simple-mode footer {
     display: none !important;
 }
@@ -616,6 +618,125 @@ body.simple-mode {
 body.simple-mode::before,
 body.simple-mode::after {
     display: none !important;
+}
+
+.favorite-controls {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    margin: 4px auto 12px;
+}
+
+.favorite-controls button,
+.favorite-form input {
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.08);
+    color: white;
+    font: inherit;
+    padding: 8px 12px;
+}
+
+.favorite-controls button {
+    cursor: pointer;
+}
+
+.favorite-controls button:hover {
+    background: rgba(255, 255, 255, 0.16);
+}
+
+.favorite-form[hidden] {
+    display: none;
+}
+
+.favorite-form {
+    display: grid;
+    grid-template-columns: auto minmax(180px, 280px);
+    align-items: center;
+    gap: 8px;
+    color: white;
+}
+
+.favorite-form input {
+    min-width: 0;
+}
+
+.favorite-form-actions {
+    grid-column: 1 / -1;
+}
+
+.favorite-form-actions {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+}
+
+#favorite-error {
+    margin: 0;
+    color: #ff6666;
+    text-align: center;
+}
+
+.favorite-sites {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.favorite-entry {
+    position: relative;
+}
+
+.custom-favorite {
+    display: flex;
+    min-width: 90px;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    border: 0;
+    background: transparent;
+    color: white;
+    cursor: pointer;
+    padding: 8px;
+}
+
+.favorite-icon {
+    width: 60px;
+    height: 60px;
+    border-radius: 8px;
+    object-fit: contain;
+    transition: transform 0.2s ease;
+}
+
+.custom-favorite:hover .favorite-icon {
+    transform: scale(1.2);
+}
+
+.favorite-name {
+    max-width: 120px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.remove-favorite {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 22px;
+    height: 22px;
+    border: 0;
+    border-radius: 50%;
+    background: rgba(70, 20, 20, 0.9);
+    color: white;
+    cursor: pointer;
+}
+
+.favorite-controls .remove-favorite {
+    padding: 0;
+    background: rgba(70, 20, 20, 0.9);
 }
 
 

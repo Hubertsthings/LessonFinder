@@ -139,6 +139,15 @@
 			<button onclick="document.getElementById('sj-address').value='https://soundcloud.com/'; document.getElementById('sj-form').dispatchEvent(new Event('submit')); return false;" class="lesson-link">
 				<img title="S0und cl0ud" src="sc.png" alt="Click to visit website" style="cursor: pointer; max-width: 60px; margin: 15px;" />
 			</button>
+
+			
+			<button onclick="document.getElementById('sj-address').value='https://www.moviedb.wiki'; document.getElementById('sj-form').dispatchEvent(new Event('submit')); return false;" class="lesson-link">
+				<img title="Movie and show stuff" src="ela/mands.png" alt="Click to visit website" style="cursor: pointer; max-width: 60px; margin: 15px;" />
+			</button>
+
+
+
+
 			
 			<button onclick="toggleSimpleMode()" class="lesson-link">
 				<img title="simple mode." src="mathskill.png" alt="Click to visit website" style="cursor: pointer; max-width: 60px; margin: 15px;" />
@@ -147,6 +156,29 @@
 
 
 		</div>
+		<section class="favorite-controls" aria-label="Custom favorite sites">
+			<button id="add-favorite-button" type="button">Add favorite website</button>
+			<form id="favorite-form" class="favorite-form" hidden>
+				<label for="favorite-name">Name</label>
+				<input id="favorite-name" name="name" type="text" maxlength="40" required />
+				<label for="favorite-url">Site URL</label>
+				<input
+					id="favorite-url"
+					name="url"
+					type="text"
+					inputmode="url"
+					placeholder="examples.com"
+					maxlength="2048"
+					required
+				/>
+				<div class="favorite-form-actions">
+					<button type="submit">Save</button>
+					<button id="cancel-favorite-button" type="button">Cancel</button>
+				</div>
+			</form>
+			<p id="favorite-error" role="alert" aria-live="polite"></p>
+		</section>
+		<div id="custom-favorites" class="favorite-sites" aria-label="Your favorite sites"></div>
 		<div class="desc left-margin">
 			<p id="sj-error"></p>
 			<pre id="sj-error-code"></pre>
