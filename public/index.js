@@ -99,22 +99,25 @@ form.addEventListener("submit", async (event) => {
 
     if (!scramjet || !connection) {
         error.textContent = "Proxy not initialized yet.";
-        return;
-    }
-
-    try {
-        await registerSW();
-    } catch (err) {
-        error.textContent = "Service worker failed.";
-        errorCode.textContent = err.toString();
+        console.error("[LessonFinder] Search failed: proxy is not initialized.");
         return;
     }
 
     const query = address.value.trim();
     if (!query) return;
 
+    try {
+        await registerSW();
+    } catch (err) {
+        error.textContent = "Service worker failed.";
+        errorCode.textContent = err.toString();
+        console.error("[LessonFinder] Search failed: service worker registration failed.", err);
+        return;
+    }
+
     const engine = currentEngine;
     const url = search(query, engine);
+    console.info("[LessonFinder] Search submitted:", { query });
 
     try {
         const wispUrl =
@@ -138,6 +141,7 @@ startLoading();
 
 currentUrl = url;
 currentFrame.go(url);
+console.info("[LessonFinder] Search navigation started successfully:", url);
 
 setTimeout(() => {
     finishLoading();
@@ -149,7 +153,7 @@ window.navOpen = true;
     } catch (err) {
         error.textContent = "Failed to load page.";
         errorCode.textContent = err.toString();
-        console.error(err);
+        console.error("[LessonFinder] Search failed:", { query, url, error: err });
     }
 });
 
@@ -411,17 +415,19 @@ window.navSearch = function () {
 
    const engine = currentEngine;
     const url = search(query, engine);
+    console.info("[LessonFinder] Navigation search submitted:", { query, url });
 
     try {
         currentUrl = url;
         currentFrame.go(url);
+        console.info("[LessonFinder] Navigation search started successfully:", url);
         startLoading();
 
         setTimeout(() => {
             finishLoading();
         }, 2000);
     } catch (e) {
-        console.error("Nav search failed", e);
+        console.error("[LessonFinder] Navigation search failed:", { query, url, error: e });
     }
 };
 
