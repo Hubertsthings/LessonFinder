@@ -38,7 +38,6 @@
 
 		<div title="Logo" class="flex-center logo-wrapper header-center">
 			<img class="logo" src="sj.png" alt="math image" />
-			<h1>Lesson finder™</h1>
 		</div>
 		<div class="flex-center desc left-margin">
 			<p style="color: grey;">
@@ -95,6 +94,7 @@
     
     <!-- LEFT: buttons island -->
     <div id="navbar">
+        <img class="nav-logo" src="ela/logo.png" alt="Lesson Finder logo" />
         <button onclick="toggleNavbar()">close nav</button>
         <button onclick="goBack()"> &#60; </button>
         <button onclick="goForward()"> &#62; </button>
@@ -124,7 +124,28 @@
 			}
 		</style>
 
-		<div class="flex-center">
+		<section class="favorite-controls" aria-label="Custom favorite sites">
+			<form id="favorite-form" class="favorite-form" hidden>
+				<label for="favorite-name">Name</label>
+				<input id="favorite-name" name="name" type="text" maxlength="40" required />
+				<label for="favorite-url">Site URL</label>
+				<input
+					id="favorite-url"
+					name="url"
+					type="text"
+					inputmode="url"
+					placeholder="examples.com"
+					maxlength="2048"
+					required
+				/>
+				<div class="favorite-form-actions">
+					<button type="submit">Save</button>
+					<button id="cancel-favorite-button" type="button">Cancel</button>
+				</div>
+			</form>
+			<p id="favorite-error" role="alert" aria-live="polite"></p>
+		</section>
+		<div id="custom-favorites" class="flex-center favorite-sites" aria-label="Your favorite sites">
 
 
 			<button onclick="document.getElementById('sj-address').value='https://duck.ai/'; document.getElementById('sj-form').dispatchEvent(new Event('submit')); return false;" class="lesson-link">
@@ -156,29 +177,6 @@
 
 
 		</div>
-		<section class="favorite-controls" aria-label="Custom favorite sites">
-			<button id="add-favorite-button" type="button">Add favorite website</button>
-			<form id="favorite-form" class="favorite-form" hidden>
-				<label for="favorite-name">Name</label>
-				<input id="favorite-name" name="name" type="text" maxlength="40" required />
-				<label for="favorite-url">Site URL</label>
-				<input
-					id="favorite-url"
-					name="url"
-					type="text"
-					inputmode="url"
-					placeholder="examples.com"
-					maxlength="2048"
-					required
-				/>
-				<div class="favorite-form-actions">
-					<button type="submit">Save</button>
-					<button id="cancel-favorite-button" type="button">Cancel</button>
-				</div>
-			</form>
-			<p id="favorite-error" role="alert" aria-live="polite"></p>
-		</section>
-		<div id="custom-favorites" class="favorite-sites" aria-label="Your favorite sites"></div>
 		<div class="desc left-margin">
 			<p id="sj-error"></p>
 			<pre id="sj-error-code"></pre>

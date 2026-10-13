@@ -292,6 +292,12 @@ footer a:hover {
     display: flex; /* let container control layout */
 }
 
+.nav-logo {
+    width: 24px;
+    height: 24px;
+    object-fit: contain;
+}
+
 /* SMALL BUTTONS */
 #navbar button {
     background: rgba(255,255,255,0.08);
@@ -679,10 +685,10 @@ body.simple-mode::after {
 }
 
 .favorite-sites {
-    display: flex;
-    justify-content: center;
     flex-wrap: wrap;
-    gap: 8px;
+    align-items: center;
+    gap: 0;
+    margin: 0 auto;
 }
 
 .favorite-entry {
@@ -691,26 +697,25 @@ body.simple-mode::after {
 
 .custom-favorite {
     display: flex;
-    min-width: 90px;
     flex-direction: column;
     align-items: center;
-    gap: 6px;
-    border: 0;
-    background: transparent;
+    border: none;
+    background: none;
     color: white;
     cursor: pointer;
-    padding: 8px;
+    padding: 0;
 }
 
 .favorite-icon {
     width: 60px;
     height: 60px;
-    border-radius: 8px;
+    margin: 15px;
     object-fit: contain;
     transition: transform 0.2s ease;
 }
 
-.custom-favorite:hover .favorite-icon {
+.custom-favorite:hover .favorite-icon,
+.favorite-add-button:hover .favorite-icon {
     transform: scale(1.2);
 }
 

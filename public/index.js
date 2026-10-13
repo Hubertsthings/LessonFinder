@@ -166,20 +166,22 @@ function setFavoriteError(message) {
 
 function renderFavorites() {
     const favoritesContainer = document.getElementById("custom-favorites");
-    favoritesContainer.replaceChildren();
+    favoritesContainer.querySelectorAll("[data-favorite-entry], [data-add-favorite]").forEach((entry) => entry.remove());
 
     savedFavorites.forEach((favorite, index) => {
         const entry = document.createElement("div");
         entry.className = "favorite-entry";
+        entry.dataset.favoriteEntry = "";
 
         const visitButton = document.createElement("button");
-        visitButton.className = "custom-favorite";
+        visitButton.className = "lesson-link custom-favorite";
         visitButton.type = "button";
         visitButton.setAttribute("aria-label", `Visit ${favorite.name}`);
+        visitButton.title = favorite.name;
 
         const icon = document.createElement("img");
         icon.className = "favorite-icon";
-        icon.src = "/ela/fav.png";
+        icon.src = "/fav.png";
         icon.alt = "";
 
         const name = document.createElement("span");
@@ -208,6 +210,21 @@ function renderFavorites() {
         entry.append(visitButton, removeButton);
         favoritesContainer.append(entry);
     });
+
+    const addFavoriteButton = document.createElement("button");
+    addFavoriteButton.id = "add-favorite-button";
+    addFavoriteButton.className = "lesson-link favorite-add-button";
+    addFavoriteButton.type = "button";
+    addFavoriteButton.setAttribute("aria-label", "Add new favorite");
+    addFavoriteButton.title = "Add new favorite";
+    addFavoriteButton.dataset.addFavorite = "";
+
+    const addIcon = document.createElement("img");
+    addIcon.src = "/ela/add.png";
+    addIcon.alt = "";
+    addIcon.className = "favorite-icon";
+    addFavoriteButton.append(addIcon);
+    favoritesContainer.append(addFavoriteButton);
 }
 
 function saveFavorites(favorites) {
@@ -223,7 +240,6 @@ function saveFavorites(favorites) {
 
 function initializeFavorites() {
     const favoriteForm = document.getElementById("favorite-form");
-    const addFavoriteButton = document.getElementById("add-favorite-button");
     const cancelFavoriteButton = document.getElementById("cancel-favorite-button");
     const favoriteName = document.getElementById("favorite-name");
     const favoriteUrl = document.getElementById("favorite-url");
@@ -251,6 +267,7 @@ function initializeFavorites() {
 
     renderFavorites();
 
+    const addFavoriteButton = document.getElementById("add-favorite-button");
     addFavoriteButton.addEventListener("click", () => {
         favoriteForm.hidden = false;
         favoriteName.focus();
