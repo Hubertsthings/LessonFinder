@@ -51,15 +51,23 @@ async function init() {
         await scramjet.init();
 
         connection = new BareMux.BareMuxConnection("/baremux/worker.js");
+        return true;
 
     } catch (err) {
         error.textContent = "Initialization failed.";
         errorCode.textContent = err.toString();
         console.error(err);
+        return false;
     }
 }
 
-init();
+init().then((initialized) => {
+    const autoOpenUrl = new URLSearchParams(location.search).get("open");
+    if (!initialized || !autoOpenUrl) return;
+
+    address.value = autoOpenUrl;
+    form.requestSubmit();
+});
 
 
 
