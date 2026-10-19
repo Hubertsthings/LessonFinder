@@ -707,8 +707,8 @@ body.simple-mode::after {
 }
 
 .favorite-icon {
-    width: 60px;
-    height: 60px;
+    width: 80px;
+    height: 80px;
     margin: 15px;
     object-fit: contain;
     transition: transform 0.2s ease;
